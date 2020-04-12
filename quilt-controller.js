@@ -1,7 +1,5 @@
 $(document).ready( ()=>{
 
-  createGrid();
-
   if(localStorage.quiltImg) {
     $('#quiltImg').attr('src', localStorage.quiltImg);
   } else {
@@ -14,15 +12,50 @@ $(document).ready( ()=>{
 
   $('#quiltImg').on("load", function() {
     calcPreviewLines();
+    createGrid();
+    randomize();
+    createNumFromRows();
+  })
+
+  $("#update-rows-cols").click(()=>{
+    createGrid();
+    calcPreviewLines();
+    randomize();
+    createNumFromRows();
   })
 })
 
-function createGrid() {
-  let cols = $("#numCols").val();
-  let rows = $("#numRows").val();
+function createNumFromRows() {
+  let rows = parseInt($("#numRows").val());
 
-  let dataWidth = 500/cols;
-  let dataHeight = 500/rows;
+  $("#numFromRows").empty();
+
+  for (let i = 0; i < rows; i++) {
+    let val = 0;
+    if (i == 0) val = 3;
+    if (i == 1) val = 5;
+    if (i == 2) val = 4;
+    if (i == 3) val = 4;
+
+    row = `<li>
+      Number from Row ${i+1}:
+      <input value="${val}">
+    </li>`
+
+    $("#numFromRows").append(row);
+  }
+}
+
+function createGrid() {
+  let cols = parseInt($("#numCols").val());
+  let rows = parseInt($("#numRows").val());
+
+  let img = $("#quiltImg");
+  let w = img.width();
+  let h = img.height();
+
+  let dataWidth = img.width()/cols;
+  let dataHeight = img.height()/rows;
 
   calcPreviewLines();
 
@@ -44,8 +77,8 @@ function createGrid() {
 }
 
 function reroll(i) {
-  let cols = $("#numCols").val();
-  let rows = $("#numRows").val();
+  let cols = parseInt($("#numCols").val());
+  let rows = parseInt($("#numRows").val());
 
   let oldValue = numbers[i];
   let row = Math.floor(oldValue / rows);
@@ -54,13 +87,10 @@ function reroll(i) {
   let tries = 0;
   while (numbers[i] == oldValue && tries < 100) {
     numbers[i] = Math.floor(Math.random()*cols + row*cols);
-    console.log(numbers[i]);
     tries++;
   }
 
   setTiles();
-
-  console.log(2);
 }
 
 function calcPreviewLines() {
@@ -71,8 +101,8 @@ function calcPreviewLines() {
   let w = img.width;
   let h = img.height;
 
-  let cols = $("#numCols").val();
-  let rows = $("#numRows").val();
+  let cols = parseInt($("#numCols").val());
+  let rows = parseInt($("#numRows").val());
 
   let wSpacing = w / parseInt(cols);
   let hSpacing = h / parseInt(rows);
@@ -107,12 +137,14 @@ function readURL(input) {
 var numbers = [];
 
 function randomize() {
-  let cols = $("#numCols").val();
-  let rows = $("#numRows").val();
+  numbers = [];
+  let cols = parseInt($("#numCols").val());
+  let rows = parseInt($("#numRows").val());
 
   $("#numFromRows li input").each((i, l) => {
+    console.log(l.value, i*cols, i*cols + cols-1);
     for (let a = 0; a < l.value; a++) {
-      numbers.push(Math.floor(Math.random()*cols + i*cols));
+      numbers.push(Math.floor(Math.random()*(cols-1) + i*cols));
     }
   })
 
@@ -133,14 +165,14 @@ function randomize() {
 }
 
 function setTiles() {
-  let cols = $("#numCols").val();
-  let rows = $("#numRows").val();
+  let cols = parseInt($("#numCols").val());
+  let rows = parseInt($("#numRows").val());
 
-  let img = $("#quiltImg")[0];
+  let img = $("#quiltImg");
   if (!img) return;
 
-  let w = img.width;
-  let h = img.height;
+  let w = img.width();
+  let h = img.height();
 
   if (w <= 0 || h <= 0) return;
 
@@ -150,14 +182,19 @@ function setTiles() {
   for (let i = 0; i < cols * rows; i++) {
     let n = numbers[i];
 
-    let r = Math.floor(n / rows);
+    let r = Math.floor(n / cols);
     let c = n % cols;
+
+    console.log(n, c, r);
 
     let x = c * wSpacing;
     let y = r * hSpacing;
 
     let td = $($("td")[i]);
     td.css("background-image", `url(${localStorage.quiltImg})`);
-    td.css("background-position", `${x}px ${y}px`);
+    td.css("background-position", `${x}px ${-y}px`);
+    td.css("background-size", `${w}px ${h}px`);
+    td.css("width", `${wSpacing}px`);
+    td.css("height", `${hSpacing}px`);
   }
 }

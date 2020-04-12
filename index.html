@@ -19,9 +19,14 @@
         <input id="numRows" value="4">
       </li>
       <li>
-        <input class="file-upload" type="file" accept="image/*" />
+        <button id="update-rows-cols">Update Rows and Columns</button>
       </li>
     </ul>
+
+    <div style="text-align:right">
+      <h3> Upload new Image </h3>
+      <input class="file-upload" type="file" accept="image/*" />
+    </div>
 
     <h4 style="text-align:right"> Minimum From Each Row </h4>
     <ul id="numFromRows">
@@ -41,10 +46,9 @@
         Number from Row 4:
         <input value="4">
       </li>
-      <li>
-        <button style="margin-top:25px; padding:15px; font-size: 24px" onClick="randomize()">Randomize</button>
-      </li>
     </ul>
+
+    <button style="margin-top:25px; padding:15px; font-size: 24px" onClick="randomize()">Randomize</button>
   </div>
 
 
