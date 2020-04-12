@@ -37,6 +37,30 @@ function createGrid() {
 
     $("#quilt-table").append(row);
   }
+  $("td").each((i, t) => $(t).on('mousedown', function(e) {
+    e.stopPropagation();
+    reroll(i);
+  }))
+}
+
+function reroll(i) {
+  let cols = $("#numCols").val();
+  let rows = $("#numRows").val();
+
+  let oldValue = numbers[i];
+  let row = Math.floor(oldValue / rows);
+  let col = oldValue % cols;
+
+  let tries = 0;
+  while (numbers[i] == oldValue && tries < 100) {
+    numbers[i] = Math.floor(Math.random()*cols + row*cols);
+    console.log(numbers[i]);
+    tries++;
+  }
+
+  setTiles();
+
+  console.log(2);
 }
 
 function calcPreviewLines() {
@@ -80,11 +104,11 @@ function readURL(input) {
   }
 }
 
+var numbers = [];
+
 function randomize() {
   let cols = $("#numCols").val();
   let rows = $("#numRows").val();
-
-  let numbers = [];
 
   $("#numFromRows li input").each((i, l) => {
     for (let a = 0; a < l.value; a++) {
@@ -105,6 +129,13 @@ function randomize() {
   }
 
   //Set background images
+  setTiles();
+}
+
+function setTiles() {
+  let cols = $("#numCols").val();
+  let rows = $("#numRows").val();
+
   let img = $("#quiltImg")[0];
   if (!img) return;
 
