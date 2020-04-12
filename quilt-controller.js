@@ -3,8 +3,9 @@ $(document).ready( ()=>{
   createGrid();
 
   if(localStorage.quiltImg) {
-    console.log(4)
     $('#quiltImg').attr('src', localStorage.quiltImg);
+  } else {
+    localStorage.setItem('quiltImg', "https://i.imgur.com/009x4GQ.jpg");
   }
 
   $(".file-upload").change(function() {
