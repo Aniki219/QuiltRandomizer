@@ -6,6 +6,15 @@ $(document).ready( ()=>{
     localStorage.setItem('quiltImg', "https://i.imgur.com/009x4GQ.jpg");
   }
 
+  $("#allow-duplicates").click(function() {
+    let allowDuplicates = $("#allow-duplicates:checked").length > 0;
+    if (allowDuplicates) {
+      $("#minimumDiv").css("display", "block");
+    } else {
+      $("#minimumDiv").css("display", "none");
+    }
+  })
+
   $(".file-upload").change(function() {
     readURL(this);
   });
@@ -31,15 +40,9 @@ function createNumFromRows() {
   $("#numFromRows").empty();
 
   for (let i = 0; i < rows; i++) {
-    let val = 0;
-    if (i == 0) val = 3;
-    if (i == 1) val = 5;
-    if (i == 2) val = 4;
-    if (i == 3) val = 4;
-
     row = `<li>
-      Number from Row ${i+1}:
-      <input value="${val}">
+      Row ${i+1}:
+      <input value="${0}">
     </li>`
 
     $("#numFromRows").append(row);
@@ -141,15 +144,23 @@ function randomize() {
   let cols = parseInt($("#numCols").val());
   let rows = parseInt($("#numRows").val());
 
-  $("#numFromRows li input").each((i, l) => {
-    console.log(l.value, i*cols, i*cols + cols-1);
-    for (let a = 0; a < l.value; a++) {
-      numbers.push(Math.floor(Math.random()*(cols-1) + i*cols));
-    }
-  })
+  let allowDuplicates = $("#allow-duplicates:checked").length > 0;
 
-  while (numbers.length < cols * rows) {
-    numbers.push(Math.floor(Math.random() * cols * rows));
+  if (allowDuplicates) {
+    $("#numFromRows li input").each((i, l) => {
+      console.log(l.value, i*cols, i*cols + cols-1);
+      for (let a = 0; a < l.value; a++) {
+        numbers.push(Math.floor(Math.random()*(cols-1) + i*cols));
+      }
+    })
+
+    while (numbers.length < cols * rows) {
+      numbers.push(Math.floor(Math.random() * cols * rows));
+    }
+  } else {
+    for (let i = 0; i < rows * cols; i++) {
+      numbers.push(i);
+    }
   }
 
   //Shuffle numbers

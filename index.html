@@ -28,27 +28,35 @@
       <input class="file-upload" type="file" accept="image/*" />
     </div>
 
-    <h4 style="text-align:right"> Minimum From Each Row </h4>
-    <ul id="numFromRows">
-      <li>
-        Number from Row 1:
-        <input value="3">
-      </li>
-      <li>
-        Number from Row 2:
-        <input value="5">
-      </li>
-      <li>
-        Number from Row 3:
-        <input value="4">
-      </li>
-      <li>
-        Number from Row 4:
-        <input value="4">
-      </li>
-    </ul>
+    <div style="text-align:right">
+      <p>
+        Allow duplicates? <input id = "allow-duplicates" type="checkbox" />
+      </p>
 
-    <button style="margin-top:25px; padding:15px; font-size: 24px" onClick="randomize()">Randomize</button>
+      <div id="minimumDiv">
+        <h4> Minimum From Each Row </h4>
+        <ul id="numFromRows">
+          <li>
+            Row 1:
+            <input value="4">
+          </li>
+          <li>
+            Row 2:
+            <input value="4">
+          </li>
+          <li>
+            Row 3:
+            <input value="4">
+          </li>
+          <li>
+            Row 4:
+            <input value="4">
+          </li>
+        </ul>
+      </div>
+
+      <button style="margin-top:25px; padding:15px; font-size: 24px" onClick="randomize()">Randomize</button>
+    </div>
   </div>
 
 
