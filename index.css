@@ -1,0 +1,63 @@
+#inputs {
+  display: inline-block;
+  vertical-align: top;
+}
+
+ul {
+  list-style: none;
+  text-align: right;
+}
+
+#inputPreview {
+  min-width: 250px;
+  min-height: 250px;
+  display: inline-block;
+  position: relative;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.preview-line-h {
+  border-top: 1px solid black;
+  border-bottom: 1px solid white;
+  width: 100%;
+  height: 1px;
+  position: absolute;
+}
+
+.preview-line-v {
+  border-left: 1px solid black;
+  border-right: 1px solid white;
+  height: 100%;
+  width: 1px;
+  position: absolute;
+}
+
+#quiltImg {
+  display: inline-block;
+  border: 1px solid black;
+  max-width: 600px;
+}
+
+#quilt {
+  display: inline-block;
+  width: 500px;
+  height: 500px;
+  text-align: center;
+}
+
+#quilt-table {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#quilt-table tr {
+  width:100%;
+}
+
+#quilt-table td {
+  line-height: 125px;
+  border: 1px solid black;
+  font-size: 36px;
+}
