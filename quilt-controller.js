@@ -185,8 +185,6 @@ function setTiles() {
     let r = Math.floor(n / cols);
     let c = n % cols;
 
-    console.log(n, c, r);
-
     let x = c * wSpacing;
     let y = r * hSpacing;
 
